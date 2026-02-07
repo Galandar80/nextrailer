@@ -21,6 +21,7 @@ const Movies = lazy(() => import("./pages/Movies"));
 const TvSeries = lazy(() => import("./pages/TvSeries"));
 const Watchlist = lazy(() => import("./pages/Watchlist"));
 const PersonDetails = lazy(() => import("./pages/PersonDetails"));
+const Oscar = lazy(() => import("./pages/Oscar"));
 
 // Configurazione di React Query per gestire meglio le richieste API
 const queryClient = new QueryClient({
@@ -75,6 +76,7 @@ const App = () => {
                     <Route path="/person/:id" element={<PersonDetails />} />
                     <Route path="/movies" element={<Movies />} />
                     <Route path="/tv" element={<TvSeries />} />
+                    <Route path="/oscar" element={<Oscar />} />
                     <Route path="/watchlist" element={<Watchlist />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>

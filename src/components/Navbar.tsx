@@ -64,6 +64,12 @@ const Navbar = () => {
               Serie TV
             </Link>
             <Link
+              to="/oscar"
+              className={`transition-colors ${isActive('/oscar') ? 'text-accent font-medium' : 'hover:text-accent font-medium'}`}
+            >
+              Oscar
+            </Link>
+            <Link
               to="/genres"
               className={`transition-colors ${isActive('/genres') ? 'text-accent font-medium' : 'hover:text-accent font-medium'}`}
             >
