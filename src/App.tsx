@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useState, lazy, Suspense } from "react";
-import ApiKeyConfig from "./components/ApiKeyConfig";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { useApiKeyStore } from "./store/useApiKeyStore";
 import { AuthProvider } from "./context/AuthContext";
@@ -80,7 +79,6 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
-                <ApiKeyConfig />
               </BrowserRouter>
             </TooltipProvider>
           </QueryClientProvider>

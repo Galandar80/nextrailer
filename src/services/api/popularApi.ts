@@ -64,6 +64,19 @@ export const getUpcoming = async (): Promise<MediaItem[]> => {
   }
 };
 
+export const getNowPlaying = async (): Promise<MediaItem[]> => {
+  try {
+    const url = `${API_URL}/movie/now_playing?language=it-IT`;
+    const response = await fetchWithRetry(url);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = await response.json() as { results: any[] };
+    return processMediaItems(data.results, "movie");
+  } catch (error) {
+    console.error("Failed to fetch now playing movies", error);
+    return mockMovies;
+  }
+};
+
 export const getAiringToday = async (): Promise<MediaItem[]> => {
   try {
     const url = `${API_URL}/tv/airing_today?language=it-IT`;

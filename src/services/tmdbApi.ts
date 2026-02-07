@@ -6,7 +6,7 @@ import { getDetails, getTrailers, getMovieDetails, getTVShowDetails, getSimilar 
 import { search } from './api/searchApi';
 import { getGenres, getContentByGenre } from './api/genresApi';
 import {
-  getPopular, getTopRated, getUpcoming, getAiringToday,
+  getPopular, getTopRated, getUpcoming, getNowPlaying, getAiringToday,
   getUpcomingAll, getArticles
 } from './api/popularApi';
 import { discoverMedia, discoverAll } from './api/discoverApi';
@@ -37,6 +37,7 @@ export const tmdbApi = {
   search,
   getTopRated,
   getUpcoming,
+  getNowPlaying,
   getAiringToday,
   getContentByGenre,
   getArticles,

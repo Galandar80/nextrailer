@@ -38,8 +38,8 @@ const Home = () => {
   const [latestReleases, setLatestReleases] = useState<MediaItem[]>([]);
   const [popularMovies, setPopularMovies] = useState<MediaItem[]>([]);
   const [popularTvShows, setPopularTvShows] = useState<MediaItem[]>([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<MediaItem[]>([]);
   const [upcomingReleases, setUpcomingReleases] = useState<MediaItem[]>([]);
-  const [futureReleases, setFutureReleases] = useState<MediaItem[]>([]);
 
   // Platform content state
   const [netflixContent, setNetflixContent] = useState<MediaItem[]>([]);
@@ -60,11 +60,12 @@ const Home = () => {
 
       try {
         // Fetch standard content + platforms
-        const [trending, latest, popMovies, popTV, upcoming] = await Promise.all([
+        const [trending, latest, popMovies, popTV, nowPlaying, upcoming] = await Promise.all([
           tmdbApi.getTrending("all", "day"),
           tmdbApi.getLatestReleases(),
           tmdbApi.getPopular("movie"),
           tmdbApi.getPopular("tv"),
+          tmdbApi.getNowPlaying(),
           tmdbApi.getUpcoming()
         ]);
 
@@ -109,6 +110,7 @@ const Home = () => {
         setLatestReleases(latest);
         setPopularMovies(popMovies);
         setPopularTvShows(popTV);
+        setNowPlayingMovies(nowPlaying);
         setUpcomingReleases(upcoming);
 
         // Platform state
@@ -116,10 +118,6 @@ const Home = () => {
         setHboContent(hbo);
         setPrimeContent(prime);
         setDisneyContent(disney);
-
-        // Crea una selezione mista di film e serie TV future
-        const mixedFutureReleases = shuffleArray([...upcoming.slice(0, 10), ...popTV.slice(0, 5)]);
-        setFutureReleases(mixedFutureReleases);
 
         localStorage.setItem('lastContentRefresh', Date.now().toString());
 
@@ -169,6 +167,7 @@ const Home = () => {
   };
 
   const recommendedContent = shuffleArray([...popularMovies, ...popularTvShows]).slice(0, 15);
+  const alCinemaItems = nowPlayingMovies;
 
   const renderSkeletonLoader = () => (
     <div className="space-y-8">
@@ -285,19 +284,28 @@ const Home = () => {
               />
             )}
 
-            {/* Nuova sezione Prossime Uscite */}
-            {futureReleases.length > 0 && (
+            {alCinemaItems.length > 0 ? (
               <ContentRow
-                title="Prossime Uscite"
+                title="Al Cinema"
                 icon={<Projector className="text-purple-500" />}
-                items={futureReleases}
+                items={alCinemaItems}
                 showBadges={true}
               />
+            ) : (
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-3">
+                  <Projector className="text-purple-500" />
+                  <h2 className="text-lg font-semibold">Al Cinema</h2>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Nessuna nuova uscita al cinema disponibile al momento.
+                </p>
+              </div>
             )}
 
             {upcomingReleases.length > 0 && (
               <ContentRow
-                title="Coming Soon"
+                title="Prossime Uscite"
                 icon={<Plus className="text-green-500" />}
                 items={upcomingReleases}
                 showBadges={true}
